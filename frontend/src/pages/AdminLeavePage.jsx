@@ -6,7 +6,7 @@ export default function AdminLeavePage() {
 
   const fetchLeaves = async () => {
     const res = await api.get("/leave/all");
-    setLeaves(res.data); // ✅ FIXED
+    setLeaves(res.data);
   };
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function AdminLeavePage() {
           font-family: Inter, sans-serif;
         }
 
-        /* PAGE LAYOUT */
+        /* PAGE CENTERING */
         .leave-approval-page {
           min-height: calc(100vh - 70px);
           display: flex;
@@ -41,7 +41,7 @@ export default function AdminLeavePage() {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 40px;
-          align-items: center;
+          align-items: start;
         }
 
         .page-title {
@@ -49,13 +49,13 @@ export default function AdminLeavePage() {
           text-align: center;
           font-size: 28px;
           font-weight: 700;
-          margin-bottom: 10px;
+          margin-bottom: 20px;
           color: #111827;
         }
 
         /* LEFT CARD */
         .card {
-          background: white;
+          background: #ffffff;
           padding: 30px;
           border-radius: 18px;
           box-shadow: 0 16px 40px rgba(0,0,0,0.1);
@@ -72,48 +72,45 @@ export default function AdminLeavePage() {
           background: #f9fafb;
         }
 
-        .leave-info {
+        .info {
           font-size: 15px;
-          font-weight: 600;
+          font-weight: 500;
           color: #111827;
         }
 
-        .leave-info span {
-          display: block;
+        .dates {
           font-size: 13px;
           color: #6b7280;
           margin-top: 4px;
         }
 
-        .right-actions {
+        .actions {
           display: flex;
           align-items: center;
           gap: 10px;
         }
 
-        /* STATUS */
         .status {
           padding: 6px 14px;
           border-radius: 999px;
           font-size: 12px;
           font-weight: 700;
-          letter-spacing: 0.3px;
-          color: #111827; /* ✅ TEXT BLACK */
+          text-transform: uppercase;
+          color: #111827;
         }
 
-        .PENDING {
+        .Pending {
           background: #fde68a;
         }
 
-        .APPROVED {
-          background: #bbf7d0;
+        .Approved {
+          background: #dcfce7;
         }
 
-        .REJECTED {
-          background: #fecaca;
+        .Rejected {
+          background: #fee2e2;
         }
 
-        /* BUTTONS */
         .btn {
           padding: 8px 14px;
           border-radius: 8px;
@@ -124,27 +121,27 @@ export default function AdminLeavePage() {
         }
 
         .approve {
-          background: #16a34a;
-          color: white;
+          background: #22c55e;
+          color: #000;
         }
 
         .reject {
-          background: #dc2626;
-          color: white;
-        }
-
-        /* RIGHT IMAGE */
-        .image-box img {
-          width: 100%;
-          max-height: 420px;
-          object-fit: contain;
-          border-radius: 18px;
+          background: #ef4444;
+          color: #000;
         }
 
         .empty {
           text-align: center;
           font-size: 14px;
           color: #6b7280;
+        }
+
+        /* IMAGE */
+        .image-box img {
+          width: 100%;
+          border-radius: 18px;
+          object-fit: contain;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
 
         @media (max-width: 900px) {
@@ -158,7 +155,7 @@ export default function AdminLeavePage() {
         <div className="leave-wrapper">
           <div className="page-title">Leave Approvals</div>
 
-          {/* LEFT SIDE */}
+          {/* LEFT: APPROVAL LIST */}
           <div className="card">
             {leaves.length === 0 && (
               <div className="empty">No leave requests found.</div>
@@ -166,27 +163,29 @@ export default function AdminLeavePage() {
 
             {leaves.map((l) => (
               <div className="leave-item" key={l._id}>
-                <div className="leave-info">
-                  {l.leaveType} | {l.startDate} → {l.endDate}
-                  <span>Employee ID: {l.employeeId || "N/A"}</span>
+                <div>
+                  <div className="info">{l.leaveType}</div>
+                  <div className="dates">
+                    {l.startDate} → {l.endDate}
+                  </div>
                 </div>
 
-                <div className="right-actions">
+                <div className="actions">
                   <span className={`status ${l.status}`}>
                     {l.status}
                   </span>
 
-                  {l.status === "PENDING" && (
+                  {l.status === "Pending" && (
                     <>
                       <button
                         className="btn approve"
-                        onClick={() => updateLeave(l._id, "APPROVED")}
+                        onClick={() => updateLeave(l._id, "Approved")}
                       >
                         Approve
                       </button>
                       <button
                         className="btn reject"
-                        onClick={() => updateLeave(l._id, "REJECTED")}
+                        onClick={() => updateLeave(l._id, "Rejected")}
                       >
                         Reject
                       </button>
@@ -197,11 +196,11 @@ export default function AdminLeavePage() {
             ))}
           </div>
 
-          {/* RIGHT SIDE IMAGE */}
+          {/* RIGHT: IMAGE */}
           <div className="image-box">
             <img
               src="https://www.timelabs.in/images/LeaveManagement/what_is_leave_management.png"
-              alt="Leave Management"
+              alt="Leave Management Illustration"
             />
           </div>
         </div>

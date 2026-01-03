@@ -57,14 +57,12 @@ export default function LeavePage() {
           color: #111827;
         }
 
-        /* TWO COLUMN LAYOUT */
         .leave-row {
           display: flex;
           gap: 30px;
           align-items: flex-start;
         }
 
-        
         .leave-left,
         .leave-right {
           flex: 1;
@@ -84,14 +82,34 @@ export default function LeavePage() {
           color: #111827;
         }
 
-        select, input, textarea {
+        select,
+        input,
+        textarea {
           width: 100%;
           margin-bottom: 14px;
           padding: 12px 14px;
           border-radius: 8px;
           border: 1px solid #d1d5db;
           font-size: 14px;
+
+          /* 🔥 IMPORTANT FIX */
+          background-color: #ffffff;
+          color: #111827;
         }
+
+        input::placeholder,
+        textarea::placeholder {
+          color: #6b7280;
+        }
+
+        select:focus,
+        input:focus,
+        textarea:focus {
+          outline: none;
+          border-color: #4f46e5;
+          background-color: #ffffff;
+        }
+
 
         select:focus,
         input:focus,
@@ -121,6 +139,7 @@ export default function LeavePage() {
           background: #4338ca;
         }
 
+        /* LEAVE ITEM */
         .leave-item {
           background: #f9fafb;
           padding: 14px;
@@ -131,31 +150,40 @@ export default function LeavePage() {
           align-items: center;
           margin-bottom: 12px;
           font-size: 14px;
+          color: #111827; /* 🔥 FORCE VISIBILITY */
         }
 
+        .leave-text {
+          font-weight: 600;
+          color: #111827;
+        }
+
+        .leave-dates {
+          font-weight: 500;
+          color: #374151;
+        }
+
+        /* STATUS BADGE */
         .status {
           padding: 6px 12px;
           border-radius: 999px;
           font-size: 12px;
-          font-weight: 600;
+          font-weight: 700;
+          color: #111827;
         }
 
         .PENDING {
-          background: #fef3c7;
-          color: #92400e;
+          background: #fde68a;
         }
 
         .APPROVED {
-          background: #dcfce7;
-          color: #166534;
+          background: #86efac;
         }
 
         .REJECTED {
-          background: #fee2e2;
-          color: #991b1b;
+          background: #fca5a5;
         }
 
-        /* RESPONSIVE */
         @media (max-width: 900px) {
           .leave-row {
             flex-direction: column;
@@ -167,7 +195,7 @@ export default function LeavePage() {
         <div className="page-title">Leave Management</div>
 
         <div className="leave-row">
-          {/* LEFT: APPLY LEAVE */}
+          {/* APPLY LEAVE */}
           <div className="leave-left">
             <div className="card">
               <div className="card-title">Apply Leave</div>
@@ -205,7 +233,7 @@ export default function LeavePage() {
             </div>
           </div>
 
-          {/* RIGHT: MY LEAVES */}
+          {/* MY LEAVES */}
           <div className="leave-right">
             <div className="card">
               <div className="card-title">My Leave Requests</div>
@@ -218,10 +246,16 @@ export default function LeavePage() {
 
               {leaves.map((l) => (
                 <div className="leave-item" key={l._id}>
-                  <span>
-                    <b>{l.leaveType}</b> | {l.startDate} → {l.endDate}
-                  </span>
-                  <span className={`status ${l.status}`}>
+                  <div>
+                    <span className="leave-text">
+                      {l.leaveType || "Paid"}
+                    </span>
+                    <span className="leave-dates">
+                      {" "} | {l.startDate} → {l.endDate}
+                    </span>
+                  </div>
+
+                  <span className={`status ${l.status.toUpperCase()}`}>
                     {l.status}
                   </span>
                 </div>
