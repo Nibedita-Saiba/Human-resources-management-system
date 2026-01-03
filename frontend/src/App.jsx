@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+import ChatWidget from "./components/ChatWidget";
+
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
@@ -13,14 +15,19 @@ import ProtectedRoute from "./components/ProtectedRoute";
 export default function App() {
   return (
     <BrowserRouter>
+      {/* Top Navigation */}
       <Navbar />
 
+      {/* Floating Chat Widget */}
+      <ChatWidget />
+
+      {/* App Routes */}
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* Profile (Both Admin & Employee) */}
+        {/* Profile (Admin & Employee) */}
         <Route
           path="/profile"
           element={
@@ -30,7 +37,7 @@ export default function App() {
           }
         />
 
-        {/* Employee Protected */}
+        {/* Employee Routes */}
         <Route
           path="/employee"
           element={
@@ -49,7 +56,7 @@ export default function App() {
           }
         />
 
-        {/* Admin Protected */}
+        {/* Admin Routes */}
         <Route
           path="/admin"
           element={
