@@ -7,6 +7,7 @@ import EmployeeDashboard from "./pages/EmployeeDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import LeavePage from "./pages/LeavePage";
 import AdminLeavePage from "./pages/AdminLeavePage";
+import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
@@ -15,9 +16,19 @@ export default function App() {
       <Navbar />
 
       <Routes>
-        {/* Public */}
+        {/* Public Routes */}
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
+        {/* Profile (Both Admin & Employee) */}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Employee Protected */}
         <Route

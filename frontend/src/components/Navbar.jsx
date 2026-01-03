@@ -19,6 +19,13 @@ export default function Navbar() {
         </>
       )}
 
+      {/* Logged-in users */}
+      {token && (
+        <>
+          <Link to="/profile">Profile</Link> |{" "}
+        </>
+      )}
+
       {/* Employee */}
       {token && role === "EMPLOYEE" && (
         <>

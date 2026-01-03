@@ -10,13 +10,22 @@ export default function Signup() {
   const navigate = useNavigate();
 
   const signup = async () => {
+    const cleanEmail = email.trim(); // remove extra spaces
+
+    // ✅ EMAIL VALIDATION (ONLY SIGNUP)
+    if (!cleanEmail.endsWith("@gmail.com")) {
+      alert("Invalid email. Email must end with @gmail.com");
+      return; // ⛔ STOP signup
+    }
+
     try {
       await api.post("/auth/signup", {
         employeeId,
-        email,
+        email: cleanEmail,
         password,
         role,
       });
+
       alert("Signup successful");
       navigate("/");
     } catch {
@@ -32,7 +41,9 @@ export default function Signup() {
         placeholder="Employee ID"
         onChange={(e) => setEmployeeId(e.target.value)}
       />
+
       <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+
       <input
         type="password"
         placeholder="Password"
